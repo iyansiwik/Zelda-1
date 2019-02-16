@@ -14,6 +14,8 @@ public abstract class Entity {
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
 	
+	protected Screen screen;
+	
 	protected int speed = 3;
 	
 	protected BufferedImage strip;
@@ -21,13 +23,19 @@ public abstract class Entity {
 	protected int x, y;
 	protected int direction;
 		
-	public Entity(String imagePath) {
+	public Entity(String imagePath, int x, int y) {
 		try {
 			strip = ImageIO.read(new File("res/"+imagePath+".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.x = x;
+		this.y = y;
 		direction = DOWN;
+	}
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;
 	}
 	
 	public void setLocation(int x, int y) {

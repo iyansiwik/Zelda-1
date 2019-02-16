@@ -7,6 +7,8 @@ public class Zelda extends Game {
 	}
 	
 	public void init() {
+		Audio aud_overworld = new Audio("audio/Overworld", 1f, true);
+		
 		Tileset overworld1 = new Tileset("tilesets/overworld1", 16);
 		Tile stairs1 = new Tile(overworld1, 0, 0);
 		Tile stone1 = new Tile(overworld1, 1, 0);
@@ -18,17 +20,17 @@ public class Zelda extends Game {
 		Tile tree1 = new Tile(overworld1, 1, 1);
 		Tile armos1 = new Tile(overworld1, 2, 1);
 		Tile tree_dl1 = new Tile(overworld1, 3, 1);
-		Tile cave1 = new Tile(overworld1, 4, 1);
+		Tile cave1 = new Tile(overworld1, 4, 1, false, false, true, true);
 		Tile tree_dr1 = new Tile(overworld1, 5, 1);
-		Tile rock_ul1 = new Tile(overworld1, 0, 2);
-		Tile rock_u1 = new Tile(overworld1, 1, 2);
-		Tile rock_ur1 = new Tile(overworld1, 2, 2);
+		Tile rock_ul1 = new Tile(overworld1, 0, 2, false, true, false, false);
+		Tile rock_u1 = new Tile(overworld1, 1, 2, false);
+		Tile rock_ur1 = new Tile(overworld1, 2, 2, true, false, false, false);
 		Tile statue_ul1 = new Tile(overworld1, 3, 2);
 		Tile statue_u1 = new Tile(overworld1, 4, 2);
 		Tile statue_ur1 = new Tile(overworld1, 5, 2);
-		Tile rock_dl1 = new Tile(overworld1, 0, 3);
-		Tile rock1 = new Tile(overworld1, 1, 3);
-		Tile rock_dr1 = new Tile(overworld1, 2, 3);
+		Tile rock_dl1 = new Tile(overworld1, 0, 3, false, false, true, false);
+		Tile rock1 = new Tile(overworld1, 1, 3, false);
+		Tile rock_dr1 = new Tile(overworld1, 2, 3, false, false, false, true);
 		Tile statue_dl1 = new Tile(overworld1, 3, 3);
 		Tile sand1 = new Tile(overworld1, 4, 3);
 		Tile statue_dr1 = new Tile(overworld1, 5, 3);
@@ -57,7 +59,7 @@ public class Zelda extends Game {
 		Tile waterfall1 = new Tile(overworld1, 4, 7);
 		Tile dock1 = new Tile(overworld1, 5, 7);
 		
-		Screen screenH7 = new Screen();
+		Screen screenH7 = new Screen(aud_overworld);
 		screenH7.setTile(rock1, 0, 0);
 		screenH7.setTile(rock1, 1, 0);
 		screenH7.setTile(rock1, 2, 0);

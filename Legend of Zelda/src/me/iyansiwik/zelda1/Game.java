@@ -64,7 +64,7 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 	}
 	
 	private void run() {
-		link = new Link();
+		link = new Link(120, 136);
 		
 		init();
 		
@@ -101,8 +101,12 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 	}
 	
 	public void setScreen(Screen screen) {
-		if(this.screen != null) this.screen.removeEntity(link);
+		if(this.screen != null) {
+			this.screen.removeEntity(link);
+			this.screen.stopAudio();
+		}
 		screen.addEntity(link);
+		screen.playAudio();
 		this.screen = screen;
 	}
 	

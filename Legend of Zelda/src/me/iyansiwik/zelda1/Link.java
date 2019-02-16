@@ -1,6 +1,7 @@
 package me.iyansiwik.zelda1;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -19,8 +20,8 @@ public class Link extends Entity {
 	private int dx;
 	private int dy;
 	
-	public Link() {
-		super("link/link_green");
+	public Link(int x, int y) {
+		super("link/link_green", x, y);
 		move = new BufferedImage[8];
 		for(int i=0;i<move.length;i++) {
 			move[i] = strip.getSubimage(i*SIZE, 0, SIZE, SIZE);
@@ -34,43 +35,60 @@ public class Link extends Entity {
 	private long lastFrameChange;
 	
 	public void tick(boolean[] keys) {
-		boolean moving = false;
-		if(keys[KeyEvent.VK_UP]) {
-			y -= speed;
-			direction = UP;
-			moving = true;
-			dy = -1;
-			dx = 0;
-		}
-		else if(keys[KeyEvent.VK_DOWN]) {
-			y += speed;
-			direction = DOWN;
-			moving = true;
-			dy = 1;
-			dx = 0;
-		}
-		else if(keys[KeyEvent.VK_RIGHT]) {
-			x += speed;
+		dy = 0;
+		dx = 0;
+		if(keys[KeyEvent.VK_RIGHT]) {
 			direction = RIGHT;
-			moving = true;
 			dy = 0;
 			dx = 1;
 		}
-		else if(keys[KeyEvent.VK_LEFT]) {
-			x -= speed;
+		if(keys[KeyEvent.VK_LEFT]) {
 			direction = LEFT;
-			moving = true;
 			dy = 0;
 			dx = -1;
 		}
-		else {
-			dy = 0;
+		if(keys[KeyEvent.VK_UP]) {
+			direction = UP;
+			dy = -1;
 			dx = 0;
 		}
-		if(moving == true && System.currentTimeMillis()-lastFrameChange >= ANIMATION_SPEED) {
+		if(keys[KeyEvent.VK_DOWN]) {
+			direction = DOWN;
+			dy = 1;
+			dx = 0;
+		}
+
+		if((dx != 0 || dy != 0) && System.currentTimeMillis()-lastFrameChange >= ANIMATION_SPEED) {
 			frame = (frame+1) % 2;
 			lastFrameChange = System.currentTimeMillis();
 		}
+		
+		int xx = dx*speed;
+		if(screen != null) {
+			if(screen.isCollidingWithTile(new Rectangle(x+xx, y+SIZE/2, SIZE, SIZE/2))) {
+				xx = 0;
+				while(!screen.isCollidingWithTile(new Rectangle(x+xx, y+SIZE/2, SIZE, SIZE/2))) {
+					xx += dx;
+				}
+				xx -= dx;
+			}
+		}
+		x += xx;
+		
+		int yy = dy*speed;
+		if(screen != null) {
+			if(screen.isCollidingWithTile(new Rectangle(x, y+yy+SIZE/2, SIZE, SIZE/2))) {
+				yy = 0;
+				while(!screen.isCollidingWithTile(new Rectangle(x, y+yy+SIZE/2, SIZE, SIZE/2))) {
+					yy += dy;
+				}
+				yy -= dy;
+			}
+		}
+		y += yy;
+		
+		if(xx == 0) dx = 0;
+		if(yy == 0) dy = 0;
 	}
 	
 	public void render(Graphics g, float interpolation) {

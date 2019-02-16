@@ -7,26 +7,28 @@ public class Tile {
 
 	private BufferedImage image;
 	
-	private boolean walkthrough_ul;
-	private boolean walkthrough_ur;
-	private boolean walkthrough_dl;
-	private boolean walkthrough_dr;
+	private boolean[] walkthrough;
 	
-	public Tile(Tileset tileset, int x, int y, boolean walkthrough_ul, boolean walkthrough_ur, boolean walkthrough_dl, boolean walkthrough_dr) {
+	public Tile(Tileset tileset, int x, int y, boolean walk_I, boolean walk_II, boolean walk_III, boolean walk_IV) {
 		image = tileset.getTile(x, y);
 		
-		this.walkthrough_ul = walkthrough_ul;
-		this.walkthrough_ur = walkthrough_ur;
-		this.walkthrough_dl = walkthrough_dl;
-		this.walkthrough_dr = walkthrough_dr;
+		walkthrough = new boolean[4];
+		walkthrough[0] = walk_I;
+		walkthrough[1] = walk_II;
+		walkthrough[2] = walk_III;
+		walkthrough[3] = walk_IV;
 	}
 	
-	public Tile(Tileset tileset, int x, int y, boolean walkthrough) {
-		this(tileset, x, y, walkthrough, walkthrough, walkthrough, walkthrough);
+	public Tile(Tileset tileset, int x, int y, boolean walk) {
+		this(tileset, x, y, walk, walk, walk, walk);
 	}
 	
 	public Tile(Tileset tileset, int x, int y) {
 		this(tileset, x, y, true);
+	}
+	
+	public boolean[] getWalkthroughable() {
+		return walkthrough;
 	}
 	
 	public void render(Graphics g, int x_offset, int y_offset) {
