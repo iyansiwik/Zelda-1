@@ -30,19 +30,21 @@ public class Screen {
 		entities.remove(entity);
 	}
 	
-	public void tick() {
-		
+	public void tick(boolean[] keys) {
+		for(Entity entity : entities) {
+			entity.tick(keys);
+		}
 	}
 	
-	public void render(Graphics g, int x_offset, int y_offset) {
+	public void render(Graphics g, float interpolation, int x_offset, int y_offset) {
 		for(int i=0;i<tiles.length;i++) {
 			for(int j=0;j<tiles[i].length;j++) {
 				tiles[i][j].render(g, i*tiles[i][j].getSize()+x_offset, j*tiles[i][j].getSize()+y_offset);
 			}
 		}
-//		for(Entity entity : entities) {
-//			entity.render(g);
-//		}
+		for(Entity entity : entities) {
+			entity.render(g, interpolation);
+		}
 	}
 	
 	public int getWidth() {
