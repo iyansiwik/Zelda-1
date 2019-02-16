@@ -1,0 +1,25 @@
+Splash Screen (animated)
+	Wait too long, scrolls through something
+
+On Start pressed go to file select
+
+Menu is 3.5 tiles tall
+
+16 Tiles Across
+10.5 Tiles Down
+
+
+16 across x 14 down
+
+
+Rupee Count: 104,16
+Key Count: 104, 32
+Bomb Count: 104, 40
+
+Heart 176, 40
+
+B:
+Sword: 128, 23
+
+A:
+Sword: 152, 23
