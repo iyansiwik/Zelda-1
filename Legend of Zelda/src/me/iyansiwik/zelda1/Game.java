@@ -8,7 +8,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public abstract class Game extends Canvas implements KeyListener, WindowListener {
@@ -39,6 +42,11 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		frame = new JFrame("Legend of Zelda, The - Java Edition");
+		try {
+			frame.setIconImage(ImageIO.read(new File("res/icon.png")));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.addWindowListener(this);
