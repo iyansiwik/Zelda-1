@@ -80,6 +80,7 @@ public class Zelda extends Game {
 		Tile statue_ur2 = new Tile(overworld2, 5, 2, true, false, false, false);
 		Tile rock_dl2 = new Tile(overworld2, 0, 3, false, false, true, false);
 		Tile rock2 = new Tile(overworld2, 1, 3, false);
+		Tile rock2_walkthrough = new Tile(overworld2, 1, 3);
 		Tile rock_dr2 = new Tile(overworld2, 2, 3, false, false, false, true);
 		Tile statue_dl2 = new Tile(overworld2, 3, 3, false);
 		Tile sand2 = new Tile(overworld2, 4, 3);
@@ -111,16 +112,16 @@ public class Zelda extends Game {
 		
 		Tileset overworld3 = new Tileset("tilesets/overworld3", 16);
 		Tile stairs3 = new Tile(overworld3, 0, 0);
-		Tile stone3 = new Tile(overworld3, 1, 0, false);
+		Tile grave3 = new Tile(overworld3, 1, 0, false);
 		Tile ground3 = new Tile(overworld3, 2, 0);
 		Tile tree_ul3 = new Tile(overworld3, 3, 0, false);
 		Tile tree_u3 = new Tile(overworld3, 4, 0, false);
 		Tile tree_ur3 = new Tile(overworld3, 5, 0, true, false, false, true);
 		Tile ladder3 = new Tile(overworld3, 0, 1);
-		Tile grave3 = new Tile(overworld3, 1, 1, false);
+		Tile tree3 = new Tile(overworld3, 1, 1, false);
 		Tile armos3 = new Tile(overworld3, 2, 1, false);
 		Tile tree_dl3 = new Tile(overworld3, 3, 1, false, true, true, false);
-		Tile cave3 = new Tile(overworld3, 4, 2, false, false, true, true);
+		Tile cave3 = new Tile(overworld3, 4, 1, false, false, true, true);
 		Tile tree_dr3 = new Tile(overworld3, 5, 1, false);
 		Tile rock_ul3 = new Tile(overworld3, 0, 1, false, true, false, false);
 		Tile rock_u3 = new Tile(overworld3, 1, 2, false);
@@ -221,18 +222,16 @@ public class Zelda extends Game {
 		Screen B13 = new Screen(aud_overworld);
 		B13.load("screens/B13", new Tile[] {ground2, rock2, rock_u2, rock_dr2, rock_dl2, rock_ur2, rock_ul2, ladder2, stone2, water_ul2, water_u2, water_l2, water2});
 		Screen B14 = new Screen(aud_overworld);
-//		B14.load("screens/B14", new Tile[] {});
+		B14.load("screens/B14", new Tile[] {ground2, rock2, rock_u2, rock_dr2, water_u2, water2, cave2, ladder2});
 		Screen B15 = new Screen(aud_overworld);
-//		B15.load("screens/B15", new Tile[] {});
-		
-		setScreen(B13);
+		B15.load("screens/B15", new Tile[] {ground2, rock2, rock_u2, rock2_walkthrough, water2, tree_ul1, tree_ur1, tree_u1, tree_dl1, tree_dr1, cave2});
 		
 		Screen C0 = new Screen(aud_overworld);
 		C0.load("screens/C0", new Tile[] {ground3, rock3, rock_u3, rock_dr3, grave3});
 		Screen C1 = new Screen(aud_overworld);
-//		C1.load("screens/C1", new Tile[] {});
+		C1.load("screens/C1", new Tile[] {ground3, rock3, rock_u3, tree3, grave3});
 		Screen C2 = new Screen(aud_overworld);
-//		C2.load("screens/C2", new Tile[] {});
+		C2.load("screens/C2", new Tile[] {ground3, rock2, rock_u2, statue_ul3, statue_u3, statue_ur3, statue_dl3, cave3, statue_dr3, armos3, ladder2});
 		Screen C3 = new Screen(aud_overworld);
 //		C3.load("screens/C3", new Tile[] {});
 		Screen C4 = new Screen(aud_overworld);
@@ -259,6 +258,8 @@ public class Zelda extends Game {
 //		C14.load("screens/C14", new Tile[] {});
 		Screen C15 = new Screen(aud_overworld);
 //		C15.load("screens/C15", new Tile[] {});
+		
+//		setScreen(C2);
 		
 		Screen D0 = new Screen(aud_overworld);
 //		D0.load("screens/D0", new Tile[] {});
@@ -424,5 +425,7 @@ public class Zelda extends Game {
 //		H14.load("screens/H14", new Tile[] {});
 		Screen H15 = new Screen(aud_overworld);
 //		H15.load("screens/H15", new Tile[] {});
+		
+		setScreen(H7);
 	}
 }
