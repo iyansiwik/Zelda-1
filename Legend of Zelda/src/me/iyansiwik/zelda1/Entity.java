@@ -16,7 +16,7 @@ public abstract class Entity {
 	
 	protected Screen screen;
 	
-	protected int speed = 3;
+	protected int speed = 4;
 	
 	protected BufferedImage strip;
 
