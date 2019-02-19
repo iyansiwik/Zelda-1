@@ -55,6 +55,6 @@ public abstract class Entity {
 		this.direction = direction;
 	}
 	
-	public abstract void tick(boolean[] keys);
+	public abstract int tick(Game game, boolean[] keys);
 	public abstract void render(Graphics g, float interpolation);
 }

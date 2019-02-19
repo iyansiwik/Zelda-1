@@ -148,9 +148,13 @@ public class Screen {
 		return false;
 	}
 	
-	public void tick(boolean[] keys) {
+	public Audio getAudio() {
+		return audio;
+	}
+	
+	public void tick(Game game, boolean[] keys) {
 		for(Entity entity : entities) {
-			entity.tick(keys);
+			if(entity.tick(game, keys) == 1) return;
 		}
 	}
 	

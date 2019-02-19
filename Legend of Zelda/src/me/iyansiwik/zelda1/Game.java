@@ -16,13 +16,20 @@ import javax.swing.JFrame;
 
 public abstract class Game extends Canvas implements KeyListener, WindowListener {
 	
-	private boolean[] keys;
-
+	private boolean up;
+	private boolean right;
+	private boolean down;
+	private boolean left;
+	private boolean A;
+	private boolean B;
+	private boolean Start;
+	private boolean Select;
+	
 	private final int WIDTH = 256;
 	private final int HEIGHT = 224;
 	private final double SCALE;
 
-	private final int TICKS_PER_SECOND = 25;
+	private final int TICKS_PER_SECOND = 20;
 	private final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
 	
@@ -31,13 +38,14 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 	
 	private Link link;
 	
+	private Map map;
 	private Screen screen;
+	private int screen_x;
+	private int screen_y;
 	
 	private boolean running = false;
 	
 	public Game(double scale) {
-		keys = new boolean[256];
-		
 		SCALE = scale;
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -93,7 +101,7 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 	}
 	
 	private void tick() {
-		if(screen != null) screen.tick(keys);
+		if(screen != null) screen.tick(this, new boolean[] {up, right, down, left, A, B, Start, Select});
 	}
 	
 	private void render(float interpolation) {
@@ -108,13 +116,45 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 		g.dispose();
 	}
 	
-	public void setScreen(Screen screen) {
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	
+	public void goUp() {
+		link.setLocation(link.getX(), (screen.getHeight()*16)-16+56);
+		System.out.println(link.getY());
+		setScreen(screen_x, screen_y-1);
+	}
+	
+	public void goRight() {
+		link.setLocation(0, link.getY());
+		setScreen(screen_x+1, screen_y);
+	}
+	
+	public void goDown() {
+		link.setLocation(link.getX(), 56);
+		setScreen(screen_x, screen_y+1);
+	}
+	
+	public void goLeft() {
+		link.setLocation((screen.getWidth()*16)-16, link.getY());
+		setScreen(screen_x-1, screen_y);
+	}
+	
+	public void setScreen(int x, int y) {
+		System.out.println("Setting Screen");
+		if(x < 0 || y < 0 || x >= map.getWidth() || y >= map.getHeight()) return;
+		screen_x = x;
+		screen_y = y;
+		Screen screen = map.getScreen(x, y);
+		boolean change_audio = true;
 		if(this.screen != null) {
 			this.screen.removeEntity(link);
-			this.screen.stopAudio();
+			if(this.screen.getAudio() == screen.getAudio()) change_audio = false;
+			else this.screen.stopAudio();
 		}
 		screen.addEntity(link);
-		screen.playAudio();
+		if(change_audio) screen.playAudio();
 		this.screen = screen;
 	}
 	
@@ -128,10 +168,40 @@ public abstract class Game extends Canvas implements KeyListener, WindowListener
 	public void windowIconified(WindowEvent e) {}
 	public void windowOpened(WindowEvent e) {}
 	public void keyPressed(KeyEvent e) {
-		keys[e.getExtendedKeyCode()] = true;
+		switch(e.getExtendedKeyCode()) {
+		case KeyEvent.VK_UP:
+			down = false;
+			up = true;
+			break;
+		case KeyEvent.VK_DOWN:
+			up = false;
+			down = true;
+			break;
+		case KeyEvent.VK_LEFT:
+			right = false;
+			left = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+			left = false;
+			right = true;
+			break;
+		}
 	}
 	public void keyReleased(KeyEvent e) {
-		keys[e.getExtendedKeyCode()] = false;
+		switch(e.getExtendedKeyCode()) {
+		case KeyEvent.VK_DOWN:
+			down = false;
+			break;
+		case KeyEvent.VK_UP:
+			up = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			right = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			left = false;
+			break;
+		}
 	}
 	public void keyTyped(KeyEvent e) {}
 }
